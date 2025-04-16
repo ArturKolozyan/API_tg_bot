@@ -18,6 +18,3 @@ async def main():
     data = await fetch_data("https://jsonplaceholder.typicode.com/users")
     if data:
         print(data)
-
-if __name__ == "__main__":
-    asyncio.run(main())

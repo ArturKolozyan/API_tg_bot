@@ -19,3 +19,6 @@ class Config:
 
     def get_bot_token(self):
         return self.BOT_TOKEN
+
+
+config = Config()
