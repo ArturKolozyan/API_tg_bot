@@ -1,14 +1,14 @@
-from src.db.models import Base
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
-from src.config import Config
+from .models import Base
+from config import Config
 
 config = Config()
 
-
 class DbRepository:
+
     def __init__(self):
-        self.engine = create_async_engine(config.get_db_url())
+        self.engine = create_async_engine(config.get_db_url(), echo=True)
         self.session = async_sessionmaker(self.engine)
 
     async def create_database(self):

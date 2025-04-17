@@ -3,7 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher
 
 from config import Config
-from app.handlers import router
+from bot.handlers import router
 
 config = Config()
 

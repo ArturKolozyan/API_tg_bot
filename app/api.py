@@ -2,7 +2,7 @@ import aiohttp
 import asyncio
 
 
-class APIClient:
+class JSONPlaceholderClient:
 
     def __init__(self, base_url):
         self.__base_url = base_url
@@ -23,9 +23,5 @@ class APIClient:
         except asyncio.TimeoutError:
             print("Превышено время ожидания GET-запроса к API.")
             return None
-
-
-class JSONPlaceholderClient(APIClient):
-    pass
 
 

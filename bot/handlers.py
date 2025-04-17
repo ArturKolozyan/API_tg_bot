@@ -4,6 +4,7 @@ from aiogram.types import Message, CallbackQuery
 
 from .keyboards import *
 from .texts import *
+from db.database import DbRepository
 
 router = Router()
 
@@ -14,6 +15,7 @@ async def cmd_start(message: Message):
 
 
 @router.callback_query(F.data == 'GET')
-async def cmd_callback(callback: CallbackQuery):
-
-    await callback.message.answer('GET')
+async def cmd_callback(callback: CallbackQuery, db: DbRepository = DbRepository()):
+    await db.delete_database()
+    await db.create_database()
+    await callback.answer('GET')
