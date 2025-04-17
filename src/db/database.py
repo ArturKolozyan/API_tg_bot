@@ -1,10 +1,15 @@
-from .models import Base
+from src.db.models import Base
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+
+from src.config import Config
+
+config = Config()
 
 
 class DbRepository:
-    def __init__(self, engine, session):
-        self.engine = engine
-        self.session = session
+    def __init__(self):
+        self.engine = create_async_engine(config.get_db_url())
+        self.session = async_sessionmaker(self.engine)
 
     async def create_database(self):
         async with self.engine.connect() as conn:
@@ -15,6 +20,3 @@ class DbRepository:
         async with self.engine.connect() as conn:
             await conn.run_sync(Base.metadata.drop_all)
             await conn.commit()
-
-    async def save_data(self):
-        pass
