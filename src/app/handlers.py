@@ -3,6 +3,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message, CallbackQuery
 
 from .include import texts, keyboards
+from src.db.database import DatabaseService
 
 router = Router()
 
@@ -13,6 +14,11 @@ async def cmd_start(message: Message):
 
 
 @router.callback_query(F.data == 'GET')
-async def cmd_callback(callback: CallbackQuery):
+async def cmd_callback(
+        callback: CallbackQuery,
+        db: DatabaseService
+):
+    await db.create_database()
+    # await db.delete_database()
     await callback.answer()
     await callback.message.answer("Вы нажали кнопку!")
