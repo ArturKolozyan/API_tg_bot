@@ -3,15 +3,17 @@ import logging
 from aiogram import Bot, Dispatcher
 
 from config import config
-from app.handlers import router
-from db.database import DatabaseService
+from handlers import router
+from db import DatabaseService
+from api import JSONPlaceholderClient
 
 
 def create_dispatcher():
     dp = Dispatcher()
     dp.include_router(router)
     dp.workflow_data.update(
-        db=DatabaseService()
+        db=DatabaseService(config.get_db_url, echo=True),
+        api=JSONPlaceholderClient('https://jsonplaceholder.typicode.com/users')
     )
     return dp
 

@@ -25,14 +25,14 @@ class Address(Base):
     city: Mapped[str]
     zipcode: Mapped[str]
 
-    geo: Mapped["Geo"] = relationship("Geo", uselist=False, back_populates="address")
+    geo: Mapped["Geo"] = relationship("Geo", back_populates="address")
 
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id', ondelete='CASCADE'))
     user: Mapped["User"] = relationship("User", back_populates="address")
 
 
 class Company(Base):
-    __tablename__ = 'company'
+    __tablename__ = 'companies'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
@@ -40,7 +40,7 @@ class Company(Base):
     bs: Mapped[str]
 
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id', ondelete='CASCADE'))
-    user: Mapped["User"] = relationship("User", back_populates="company")
+    user: Mapped["User"] = relationship("User", back_populates="companies")
 
 
 class User(Base):
@@ -53,8 +53,8 @@ class User(Base):
     phone: Mapped[str]
     website: Mapped[str]
 
-    address: Mapped["Address"] = relationship("Address", uselist=False, back_populates="user")
-    company: Mapped["Company"] = relationship("Company", uselist=False, back_populates="user")
+    address: Mapped["Address"] = relationship("Address", back_populates="users")
+    company: Mapped["Company"] = relationship("Company", back_populates="users")
 
     def __repr__(self):
         return f"<User(id={self.id}, username='{self.username}')>"
